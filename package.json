@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --config ./webpack.dev.js --mode development",
     "build": "webpack --progress --config ./webpack.prod.js --mode production",
-    "build:tailwind": "tailwind build src/styles.css -o src/tailwind.css"
+    "build:tailwind": "tailwind build src/assets/styles.css -o src/assets/tailwind.css"
   },
   "keywords": [],
   "author": "",
