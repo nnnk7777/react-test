@@ -1,34 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-export const Card = () => {
+import { getThumbnailURL } from "../helpers/getThumbnailURL";
+
+export const Card = ({ playlist }) => {
+  const titleTextStyle = {
+    height: "60px",
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 2,
+  };
+
+  const [thumbnail, setThumbnail] = useState(
+    "https://dummyimage.com/600x400/ffffff/000000&text=no+data"
+  );
+
+  useEffect(() => {
+    const fetchThumbnail = async () => {
+      const res = await getThumbnailURL(playlist.SongURL);
+      setThumbnail(res);
+    };
+    fetchThumbnail();
+  }, [playlist]);
+
   return (
-    <div className="max-w-sm rounded overflow-hidden bg-gray-800 shadow-lg">
-      <img
-        className="w-full"
-        src="https://source.unsplash.com/random/1600x900/"
-        alt="Sunset in the mountains"
-      ></img>
-      <div className="px-6 py-4">
-        <div className="font-bold text-gray-100 text-xl mb-2">
-          The Coldest Sunset
+    <div
+      className="w-96 md:w-80 lg:w-72 px-2 py-2.5"
+      style={{ height: "380px" }}
+    >
+      <Link to={"/play/" + playlist.ID}>
+        <div className="flex flex-col items-center cursor-pointer overflow-hidden pb-4 border border-gray-900 rounded-md bg-gray-800 text-white duration-300">
+          <div className="flex justify-center w-full bg-black">
+            <img src={thumbnail} className="w-44" style={{ height: "132px" }} />
+          </div>
+
+          <section className="mt-3 w-4/5 mx-auto">
+            <section style={{ height: "125px" }}>
+              <span className="font-bold text-lg">
+                <p style={titleTextStyle} title={playlist.Name}>
+                  {playlist.Name}
+                </p>
+              </span>
+              <p className="text-xs flex-shrink">
+                {playlist.Description ? playlist.Description : "no description"}
+              </p>
+            </section>
+
+            <p className="font-bold text-sm mt-3 pt-1">1曲目</p>
+            <p className="text-sm truncate">
+              {playlist.SongName ? playlist.SongName : "no data"}
+            </p>
+          </section>
         </div>
-        <p className="text-gray-100 text-base">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
-        </p>
-      </div>
-      <div className="px-6 py-4">
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          #photography
-        </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          #travel
-        </span>
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
-          #winter
-        </span>
-      </div>
+      </Link>
     </div>
   );
 };
