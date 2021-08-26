@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card } from "./../components/Card";
 
 export const Top = () => {
-  const [count, setCount] = useState(0);
   const arr = [1, 2, 3, 4, 5];
 
   return (
@@ -22,7 +21,6 @@ export const Top = () => {
           return <div key={i} className="h-0 w-96 m-2" />;
         })}
       </div>
-      <p>{count}</p>
     </div>
   );
 };
